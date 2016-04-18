@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 from twython import TwythonStreamer
+from twython import Twython
+import sys
+import pdb
+from unidecode import unidecode
+from datetime import datetime, timedelta
+from textblob.classifiers import NaiveBayesClassifier
 
+print(sys.version)
 # Example obtained from http://aylien.com/super-bowl-50-tweets
 # Authentication keys
 token = "720636802625859584-3UrFzmlVHpVKx4sa5WUMHUWLTgbEdeP"
@@ -32,26 +39,37 @@ ksecret= "Zoer8754SIzZcljncsnvR0XLy3NGBvH87LfO0bIzSv8j6PUgea"
 # print("Number or tweets retrieved: {}".format(search_info['count']))
 
 
-class MyStreamer(TwythonStreamer):
-    def on_success(self, data):
-        if 'text' in data:
-            print(data['text'].encode('utf-8'))
-        # Want to disconnect after the first result?
-        # self.disconnect()
+if __name__ == "__main__":
+	# Second method : Based on Alyen example
+	# 1 - Connexion to Twitter API, make query with a number of maximum tweets, and tags
+	twitter = Twython(key, ksecret, token, tsecret)	
+	teamName1 = "France"
+	teamName2 = "Italie"
+	queryList = [teamName1, teamName2]
+	resultByTeams = []
+	tweetsListByTeam = []
+	for query in queryList:
+		resultByTeam = twitter.search(q=query, lang=lang, count=count)
+		resultByTeams.append(resultByTeam)
+		# Query result information
+		tweetsByTeam = resultByTeam['statuses']
+		tweetsList = []
+		for t in tweetsByTeam:	tweetsList.append(unidecode(t["text"]))
+		tweetsListByTeam.append(tweetsList)
 
-    def on_error(self, status_code, data):
-        print(status_code, data)
+	timeToAdd = resultByTeam['completed_in']
+	timeQueryInterval = [queryStartDatetime, queryStartDatetime + datetime.timedelta(timeToAdd)]
+	
+	# 2 - Preprocessing 
 
-# Requires Authentication as of Twitter API v1.1
-APP_KEY = key
-APP_SECRET = ksecret
-OAUTH_TOKEN = token
-OAUTH_TOKEN_SECRET = tsecret
-stream = MyStreamer(APP_KEY, APP_SECRET,
-                    OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
-stream.statuses.filter(track='twitter')
-# stream.user()
-# Read the authenticated users home timeline
-# (what they see on Twitter) in real-time
-# stream.site(follow='twitter')
+
+	# 3 - Gather data and build interesing features for display 
+	volumeTweets = {}
+	volumeTweets[teamName1] = len(tweetsListByTeam[0])
+	volumeTweets[teamName2] = len(tweetsListByTeam[1])
+
+	# Sentiment analysis
+
+
+	# 4 - Display
