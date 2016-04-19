@@ -5,7 +5,8 @@ import sys
 import pdb
 from unidecode import unidecode
 from datetime import datetime, timedelta
-from textblob.classifiers import NaiveBayesClassifier
+from textblob import TextBlob
+from textblob_fr import PatternTagger, PatternAnalyzer
 
 print(sys.version)
 # Example obtained from http://aylien.com/super-bowl-50-tweets
@@ -48,6 +49,9 @@ if __name__ == "__main__":
 	queryList = [teamName1, teamName2]
 	resultByTeams = []
 	tweetsListByTeam = []
+	lang = "fr"
+	count = 5
+	queryStartDatetime = datetime.now()
 	for query in queryList:
 		resultByTeam = twitter.search(q=query, lang=lang, count=count)
 		resultByTeams.append(resultByTeam)
@@ -57,11 +61,11 @@ if __name__ == "__main__":
 		for t in tweetsByTeam:	tweetsList.append(unidecode(t["text"]))
 		tweetsListByTeam.append(tweetsList)
 
-	timeToAdd = resultByTeam['completed_in']
-	timeQueryInterval = [queryStartDatetime, queryStartDatetime + datetime.timedelta(timeToAdd)]
+	timeToAdd = resultByTeam['search_metadata']['completed_in']
+	timeQueryInterval = [queryStartDatetime, queryStartDatetime + timedelta(timeToAdd)]
 	
 	# 2 - Preprocessing 
-
+	#
 
 
 	# 3 - Gather data and build interesing features for display 
@@ -69,7 +73,10 @@ if __name__ == "__main__":
 	volumeTweets[teamName1] = len(tweetsListByTeam[0])
 	volumeTweets[teamName2] = len(tweetsListByTeam[1])
 
-	# Sentiment analysis
-
-
+	# 3.1 Sentiment analysis : polarity (subjectivity is available also)
+	testimonial = TextBlob("Textblob is amazingly simple to use. What great fun!")
+	testimonial.sentiment.polarity
+	pdb.set_trace()
+	text = "Tout va très bien"
+	analyseTexteFr = TextBlob(text, pos_tagger=PatternTagger(), analyzer=PatternAnalyzer())
 	# 4 - Display
