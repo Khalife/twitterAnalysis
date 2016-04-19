@@ -43,7 +43,14 @@ ksecret= "Zoer8754SIzZcljncsnvR0XLy3NGBvH87LfO0bIzSv8j6PUgea"
 if __name__ == "__main__":
 	# Second method : Based on Alyen example
 	# 1 - Connexion to Twitter API, make query with a number of maximum tweets, and tags
-	twitter = Twython(key, ksecret, token, tsecret)	
+	client_args = {
+	    'proxies': {
+	        'http': 'http://empweb1.ey.net:8080/',
+	        'https': 'http://empweb1.ey.net:8443/',
+	    }
+	}
+
+	twitter = Twython(key, ksecret, token, tsecret, client_args = client_args)	
 	teamName1 = "France"
 	teamName2 = "Italie"
 	queryList = [teamName1, teamName2]
