@@ -1,0 +1,19 @@
+<html>  
+<head>    
+    <title>Vega Scaffold</title>
+    <script src="lib/d3.js" charset="utf-8"></script>
+    <script src="lib/topojson.v1.min.js"></script>
+    <script src="lib/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+    <script src="lib/vega.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="vis"></div>
+</body>
+<script type="text/javascript">
+// parse a spec and create a visualization view
+function parse(spec) {
+  vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
+}
+parse("term_freq.json");
+</script>
+</html>

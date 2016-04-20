@@ -7,6 +7,7 @@ from unidecode import unidecode
 from datetime import datetime, timedelta
 from textblob import TextBlob
 from textblob_fr import PatternTagger, PatternAnalyzer
+import vincent
 
 print(sys.version)
 # Example obtained from http://aylien.com/super-bowl-50-tweets
@@ -83,7 +84,9 @@ if __name__ == "__main__":
 	# 3.1 Sentiment analysis : polarity (subjectivity is available also)
 	testimonial = TextBlob("Textblob is amazingly simple to use. What great fun!")
 	testimonial.sentiment.polarity
-	pdb.set_trace()
 	text = "Tout va très bien"
 	analyseTexteFr = TextBlob(text, pos_tagger=PatternTagger(), analyzer=PatternAnalyzer())
 	# 4 - Display
+	data = {'data': [10, 20, 30], 'x': ["Positive", "Negative", "Positive"]}
+	bar = vincent.Bar(data, iter_idx='x')
+	bar.to_json('term_freq.json', html_out=True, html_path='chart.html')
