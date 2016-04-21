@@ -1,0 +1,4 @@
+README
+
+Serveur applicatif : python et twython pour les requetes API twitter +  analyse des volumes et sentimenst
+Seveur web : Flask (Python) ou autre pour l'affichage parlant des données
