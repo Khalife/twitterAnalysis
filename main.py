@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from textblob import TextBlob
 from textblob_fr import PatternTagger, PatternAnalyzer
 import vincent
+from collections import Counter
 
 print(sys.version)
 # Example obtained from http://aylien.com/super-bowl-50-tweets
@@ -40,8 +41,7 @@ ksecret= "Zoer8754SIzZcljncsnvR0XLy3NGBvH87LfO0bIzSv8j6PUgea"
 # print("Query time: {}".format(search_info['completed_in']))
 # print("Number or tweets retrieved: {}".format(search_info['count']))
 
-
-if __name__ == "__main__":
+def getMetrics():
 	# Second method : Based on Alyen example
 	# 1 - Connexion to Twitter API, make query with a number of maximum tweets, and tags
 	client_args = {
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 	    }
 	}
 
-	twitter = Twython(key, ksecret, token, tsecret, client_args = client_args)	
+	twitter = Twython(key, ksecret, token, tsecret, client_args = client_args)
 	teamName1 = "France"
 	teamName2 = "Italie"
 	queryList = [teamName1, teamName2]
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
 	timeToAdd = resultByTeam['search_metadata']['completed_in']
 	timeQueryInterval = [queryStartDatetime, queryStartDatetime + timedelta(timeToAdd)]
-	
+
 	# 2 - Preprocessing 
 	#
 
@@ -86,7 +86,13 @@ if __name__ == "__main__":
 	testimonial.sentiment.polarity
 	text = "Tout va très bien"
 	analyseTexteFr = TextBlob(text, pos_tagger=PatternTagger(), analyzer=PatternAnalyzer())
-	# 4 - Display
-	data = {'data': [10, 20, 30], 'x': ["Positive", "Negative", "Positive"]}
-	bar = vincent.Bar(data, iter_idx='x')
-	bar.to_json('term_freq.json', html_out=True, html_path='chart.html')
+	
+
+	metrics = []
+	metrics.append(volumeTweets)
+	return metrics
+
+if __name__ == "__main__":
+	metrics = getMetrics();
+	pdb.set_trace();
+	
