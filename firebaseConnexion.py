@@ -8,11 +8,12 @@ from firebase import firebase
 # result = firebase.get('/X', None)
 # print(result)
 
-def pushFireBase(data, url):
+def pushFireBase(data, url, dataName):
+	# Erases previous data version and pushes new one
 	try:
 		firebase = firebase.FirebaseApplication(url, None)
-		firebase.delete('tweetData')
-		firebase.post('tweetData', data)
+		firebase.delete(dataName)
+		firebase.post(dataName, data)
 		return True
 	except:
 		return False

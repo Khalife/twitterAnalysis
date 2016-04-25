@@ -40,17 +40,8 @@ ksecret= "Zoer8754SIzZcljncsnvR0XLy3NGBvH87LfO0bIzSv8j6PUgea"
 
 # print("Query time: {}".format(search_info['completed_in']))
 # print("Number or tweets retrieved: {}".format(search_info['count']))
-client_args = {
-    'proxies': {
-        'http': 'http://empweb1.ey.net:8080/',
-        'https': 'http://empweb1.ey.net:8443/',
-    }
-}
 
-teamName1 = "France"
-teamName2 = "Italie"
-
-def getMetrics(client_args, teamName1, teamName2):
+def getMetrics(client_args, teamName1, teamName2, nbTweets):
 	# Second method : Based on Alyen example
 	# 1 - Connexion to Twitter API, make query with a number of maximum tweets, and tags
 
