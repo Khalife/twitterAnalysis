@@ -1,3 +1,4 @@
+# coding: utf-8
 # Based on example from http://ozgur.github.io/python-firebase/
 from firebase import firebase
 

@@ -1,3 +1,4 @@
+# coding: utf-8
 from twython import TwythonStreamer
 from twython import Twython
 import sys
